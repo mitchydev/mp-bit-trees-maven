@@ -14,7 +14,7 @@ public class BitTreeLeaf implements BitTreeNode {
     // +--------------+------------------------------------------------
     // | Constructors |
     // +--------------+
-    public BitTreeLeaf() {
+    public BitTreeLeaf(String value) {
         this.value = null;
     }
 

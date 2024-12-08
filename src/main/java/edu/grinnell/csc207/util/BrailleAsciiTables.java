@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  *
  *
- * @author Your Name Here
+ * @author Mitchell Paiva
  * @author Samuel A. Rebelsky
  */
 public class BrailleAsciiTables {
@@ -18,8 +18,7 @@ public class BrailleAsciiTables {
   /**
    * Conversions from ASCII to braille.
    */
-  static final String a2b = 
-      "01000001,100000\n"
+  static final String a2b = "01000001,100000\n"
       + "01000010,110000\n"
       + "01000011,100100\n"
       + "01000100,100110\n"
@@ -76,8 +75,7 @@ public class BrailleAsciiTables {
   /**
    * Conversions from braille to ASCII.
    */
-  static final String b2a =
-      "100000,A\n"
+  static final String b2a = "100000,A\n"
       + "110000,B\n"
       + "100100,C\n"
       + "100110,D\n"
@@ -108,8 +106,7 @@ public class BrailleAsciiTables {
   /**
    * Conversions from braille to unicode.
    */
-  static final String b2u =
-      "000000,2800\n"
+  static final String b2u = "000000,2800\n"
       + "100000,2801\n"
       + "010000,2802\n"
       + "110000,2803\n"
@@ -202,14 +199,34 @@ public class BrailleAsciiTables {
   // +----------------+
 
   /**
-   *
+   * DOCUMENTATION
    */
   public static String toBraille(char letter) {
-    return "";  // STUB
+    if (a2bTree == null) {
+      a2bTree = new BitTree(7);
+      InputStream a2bStream = new ByteArrayInputStream(a2b.getBytes());
+      a2bTree.load(a2bStream);
+      try {
+        a2bStream.close();
+      } catch (IOException e) {
+        // We don't care.
+      }
+    }
+
+    int asciiVal = (int) letter;
+    StringBuilder binaryString = new StringBuilder(7);
+
+    for (int i = 0; i < 7; i++) {
+      binaryString.append(asciiVal % 2);
+      asciiVal /= 2;
+    }
+
+    binaryString.reverse();
+    return a2bTree.get(binaryString.toString());
   } // toBraille(char)
 
   /**
-   *
+   * DOCUMENTATION
    */
   public static String toAscii(String bits) {
     // Make sure we've loaded the braille-to-ASCII tree.
@@ -223,13 +240,31 @@ public class BrailleAsciiTables {
         // We don't care if we can't close the stream.
       } // try/catch
     } // if
-    return "";  // STUB
+    
+    if (bits.length() != 6){
+      throw new IndexOutOfBoundsException();
+    } // if
+    return b2aTree.get(bits);
   } // toAscii(String)
 
   /**
-   *
+   * DOCUMENTATION
    */
   public static String toUnicode(String bits) {
-    return "";  // STUB
+    if (null == b2uTree) {
+      b2uTree = new BitTree(6);
+      InputStream b2uStream = new ByteArrayInputStream(b2u.getBytes());
+      b2uTree.load(b2uStream);
+      try {
+        b2uStream.close();
+      } catch (IOException e) {
+        // We don't care if we can't close the stream.
+      } // try/catch
+    } // if
+
+    if (bits.length() != 6) {
+      throw new IndexOutOfBoundsException();
+    }
+    return b2uTree.get(bits);
   } // toUnicode(String)
 } // BrailleAsciiTables
