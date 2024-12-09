@@ -1,55 +1,64 @@
 package edu.grinnell.csc207.util;
 
 /**
- * DOCUMENTATION NEEDED.
+ * Represents a leaf in a bit tree.
  *
  * @author Mitch Paiva
  */
 public class BitTreeLeaf implements BitTreeNode {
-    // +--------+------------------------------------------------------
-    // | Fields |
-    // +--------+
-    public String value;
+  // +--------+------------------------------------------------------
+  // | Fields |
+  // +--------+
 
-    // +--------------+------------------------------------------------
-    // | Constructors |
-    // +--------------+
-    public BitTreeLeaf(String value) {
-        this.value = null;
-    }
+  /**
+  * Value.
+  * */
+  private String value;
 
-    // +---------+-----------------------------------------------------
-    // | Methods |
-    // +---------+
+  // +--------------+------------------------------------------------
+  // | Constructors |
+  // +--------------+
+  /**
+   * Initializes a leaf node.
+   *
+   * @param value
+   */
+  public BitTreeLeaf(String value) {
+    this.value = value;
+  } // BitTreeLeaf
 
-    /**
-     * Returns the character from the leaf.
-     * 
-     * @return the character from the leaf.
-     */
-    @Override
-    public String getVal() {
-        return this.value;
-    }
+  // +---------+-----------------------------------------------------
+  // | Methods |
+  // +---------+
 
-    /**
-     * Returns the left value.
-     * 
-     * @return An exception (the left leaf does not have a value).
-     */
-    @Override
-    public BitTreeNode getLeft() {
-        throw new UnsupportedOperationException("Leaf does not have a left child!'");
-    }
+  /**
+   * Returns the character from the leaf.
+   *
+   * @return the character from the leaf.
+   */
+  @Override
+  public String getVal() {
+    return this.value;
+  } // getVal
 
-    /**
-     * returns the right child's value.
-     * 
-     * @return An exception (the right leaf does not have a value).
-     */
-    @Override
-    public BitTreeNode getRight() {
-        throw new UnsupportedOperationException("Leaf does not have a right child!");
-    }
+  /**
+   * Returns the left value.
+   *
+   * @return An exception (the left leaf does not have a value).
+   */
+  @Override
+  public BitTreeNode getLeft() {
+    throw new UnsupportedOperationException("Leaf does not have a left child!'");
+  } // getLeft
 
-}
+  /**
+   * Returns the right child's value.
+   *
+   * @return An exception (the right leaf does not have a value).
+   */
+  @Override
+  public BitTreeNode getRight() {
+    throw new UnsupportedOperationException("Leaf does not have a right child!");
+  } // getRight
+
+} // BitTreeLeaf

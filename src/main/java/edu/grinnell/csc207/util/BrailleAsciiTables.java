@@ -5,7 +5,9 @@ import java.io.InputStream;
 import java.io.IOException;
 
 /**
- *
+ * Provides methods for converting between
+ * ASCII, Braille, and Unicode representations
+ * using predefined translation tables.
  *
  * @author Mitchell Paiva
  * @author Samuel A. Rebelsky
@@ -199,34 +201,46 @@ public class BrailleAsciiTables {
   // +----------------+
 
   /**
-   * DOCUMENTATION
+   * Converts an ASCII character to Braille.
+   *
+   * @param letter
+   *
+   * @return String.
    */
   public static String toBraille(char letter) {
     if (a2bTree == null) {
-      a2bTree = new BitTree(7);
+      a2bTree = new BitTree(8);
       InputStream a2bStream = new ByteArrayInputStream(a2b.getBytes());
       a2bTree.load(a2bStream);
       try {
         a2bStream.close();
       } catch (IOException e) {
         // We don't care.
-      }
-    }
+      } // catch
+    } // if
 
     int asciiVal = (int) letter;
     StringBuilder binaryString = new StringBuilder(7);
 
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 8; i++) {
       binaryString.append(asciiVal % 2);
       asciiVal /= 2;
-    }
+    } // for
 
     binaryString.reverse();
-    return a2bTree.get(binaryString.toString());
+    try {
+      return a2bTree.get(binaryString.toString());
+    } catch (IndexOutOfBoundsException e) {
+      return "";
+    } // catch
   } // toBraille(char)
 
   /**
-   * DOCUMENTATION
+   * Converts a Braille Bit to ASCII.
+   *
+   * @param bits
+   *
+   * @return String
    */
   public static String toAscii(String bits) {
     // Make sure we've loaded the braille-to-ASCII tree.
@@ -240,15 +254,19 @@ public class BrailleAsciiTables {
         // We don't care if we can't close the stream.
       } // try/catch
     } // if
-    
-    if (bits.length() != 6){
+
+    if (bits.length() != 6) {
       throw new IndexOutOfBoundsException();
     } // if
     return b2aTree.get(bits);
   } // toAscii(String)
 
   /**
-   * DOCUMENTATION
+   * Converts a Braille bit string to Unicode.
+   *
+   * @param bits
+   *
+   * @return String.
    */
   public static String toUnicode(String bits) {
     if (null == b2uTree) {
@@ -264,7 +282,7 @@ public class BrailleAsciiTables {
 
     if (bits.length() != 6) {
       throw new IndexOutOfBoundsException();
-    }
+    } // if
     return b2uTree.get(bits);
   } // toUnicode(String)
 } // BrailleAsciiTables

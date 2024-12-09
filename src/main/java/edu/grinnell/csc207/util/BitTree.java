@@ -18,12 +18,12 @@ public class BitTree {
   /**
    * The root.
    */
-  public BitTreeNode root;
+  private BitTreeNode root;
 
   /**
    * The height of the tree.
    */
-  public int height;
+  private int height;
 
   // +--------------+------------------------------------------------
   // | Constructors |
@@ -31,9 +31,12 @@ public class BitTree {
 
   /**
    * Construct the bit tree.
+   *
+   * @param n
    */
   public BitTree(int n) {
     this.root = new BitTreeInteriorNode();
+    this.height = n;
   } // BitTree(int)
 
   // +---------------+-----------------------------------------------
@@ -41,14 +44,16 @@ public class BitTree {
   // +---------------+
 
   /**
-   * DOCUMENTATION NEEDED
+   * Validates the given bit string against the tree's limitations.
+   *
+   * @param bits
    */
   public void bitCheck(String bits) {
     if (bits.length() != height) {
       throw new IndexOutOfBoundsException("Bits length invalid.");
     } // if
     for (char ch : bits.toCharArray()) {
-      if (ch != 0 && ch != '1') {
+      if (ch != '0' && ch != '1') {
         throw new IllegalArgumentException();
       } // if
     } // for
@@ -59,13 +64,16 @@ public class BitTree {
   // +---------+
 
   /**
-   * DOCUMENTATION NEEDED
+   * Adds or updates a value in the tree at the specified bit.
+   *
+   * @param bits
+   * @param value
    */
   public void set(String bits, String value) {
     bitCheck(bits);
 
     BitTreeNode currNode = root;
-    for (int i = 0; i < bits.length(); i++) {
+    for (int i = 0; i < bits.length() - 1; i++) {
       char currBit = bits.charAt(i);
 
       if (currNode instanceof BitTreeInteriorNode) {
@@ -75,36 +83,40 @@ public class BitTree {
           case '0':
             if (newNode.getLeft() == null) {
               newNode.setLeft(new BitTreeInteriorNode());
+              currNode = newNode.getLeft();
             } else {
               currNode = newNode.getLeft();
-            }
+            } // else
             break;
           case '1':
             if (newNode.getRight() == null) {
               newNode.setRight(new BitTreeInteriorNode());
+              currNode = newNode.getRight();
             } else {
               currNode = newNode.getRight();
-            }
+            } // else
             break;
           default:
             throw new IllegalArgumentException();
-        }
-      }
-    }
+        } // switch
+      } // if
+    } // for
 
-    if (currNode instanceof BitTreeLeaf) {
-      ((BitTreeLeaf) currNode).value = value;
+    char lastBit = bits.charAt(bits.length() - 1);
+    BitTreeInteriorNode finalNode = (BitTreeInteriorNode) currNode;
+    if (lastBit == '0') {
+      finalNode.setLeft(new BitTreeLeaf(value));
     } else {
-      if (bits.charAt(bits.length() - 1) == '0') {
-        ((BitTreeInteriorNode) currNode).setLeft(new BitTreeLeaf(value));
-      } else {
-        ((BitTreeInteriorNode) currNode).setRight(new BitTreeLeaf(value));
-      }
-    }
+      finalNode.setRight(new BitTreeLeaf(value));
+    } // else
   } // set(String, String)
 
   /**
-   *DOCUMENTATION NEEDED
+   * Retreives the value stored at the specified bit.
+   *
+   * @param bits
+   *
+   * @return string.
    */
   public String get(String bits) {
     bitCheck(bits);
@@ -121,33 +133,38 @@ public class BitTree {
             throw new IndexOutOfBoundsException();
           } else {
             currNode = newNode.getLeft();
-          }
+          } // else
         } else {
           if (newNode.getRight() == null) {
             throw new IndexOutOfBoundsException();
           } else {
             currNode = newNode.getRight();
-          }
-        }
-      }
-    }
+          } // else
+        } // if
+      } // for
+    } // for
     if (currNode instanceof BitTreeLeaf) {
       return ((BitTreeLeaf) currNode).getVal();
     } else {
       throw new IndexOutOfBoundsException();
-    }
-  }
+    } // else
+  } // get
 
   /**
-   *DOCUMENTATION NEEDED
+   * Dumps the tree.
+   *
+   * @param pen
    */
   public void dump(PrintWriter pen) {
     dumpHelper(this.root, "", pen);
   } // dump(PrintWriter)
 
   /**
-   * DOCUMENTATION NEEDED
-   * @param source
+   * Helper to dump the tree.
+   *
+   * @param node
+   * @param path
+   * @param pen
    */
   public void dumpHelper(BitTreeNode node, String path, PrintWriter pen) {
     if (node instanceof BitTreeLeaf) {
@@ -156,15 +173,17 @@ public class BitTree {
       BitTreeInteriorNode newNode = (BitTreeInteriorNode) node;
       if (newNode.getLeft() != null) {
         dumpHelper(newNode.getLeft(), path + "0", pen);
-      }
+      } // if
       if (newNode.getRight() != null) {
         dumpHelper(newNode.right, path + "1", pen);
-      }
-    }
-  }
+      } // if
+    } // else if
+  } // dumpHelper
 
   /**
-   * DOCUMENTATION NEEDED
+   * Loads the bit path and value pairs into the tree.
+   *
+   * @param source
    */
   public void load(InputStream source) {
     Scanner scanner = new Scanner(source);
@@ -173,7 +192,7 @@ public class BitTree {
       String[] lineParts = line.split(",");
       if (lineParts.length == 2) {
         set(lineParts[0], lineParts[1]);
-      }
+      } // if
     } // load(InputStream)
-  }
+  } // load
 } // class BitTree

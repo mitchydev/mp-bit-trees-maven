@@ -1,68 +1,89 @@
 package edu.grinnell.csc207.util;
 
 /**
- * DOCUMENTATION NEEDED.
+ * Represents an interior node in a BitTree.
  *
  * @author Mitch Paiva
  */
 
 public class BitTreeInteriorNode implements BitTreeNode {
-    // +--------+------------------------------------------------------
-    // | Fields |
-    // +--------+
+  // +--------+------------------------------------------------------
+  // | Fields |
+  // +--------+
 
-    BitTreeNode left;
-    BitTreeNode right;
+  /**
+  * Left.
+  * */
+  BitTreeNode left;
 
-    // +--------------+------------------------------------------------
-    // | Constructors |
-    // +--------------+
+  /**
+  * Right.
+  * */
+  BitTreeNode right;
 
-    public BitTreeInteriorNode() {
-        this.left = null;
-        this.right = null;
-    }
+  // +--------------+------------------------------------------------
+  // | Constructors |
+  // +--------------+
 
-    // +---------+-----------------------------------------------------
-    // | Methods |
-    // +---------+
+  /**
+   * Initializes an interior node.
+   *
+   * @author Mitch Paiva
+   */
+  public BitTreeInteriorNode() {
+    this.left = null;
+    this.right = null;
+  } // BitTreeInteriorNode
 
-    public String getVal() {
-        throw new UnsupportedOperationException("Interior node does not have a value.");
-    }
+  // +---------+-----------------------------------------------------
+  // | Methods |
+  // +---------+
 
-    /**
-     * returns the left value.
-     * 
-     * @return the left value.
-     */
-    @Override
-    public BitTreeNode getLeft() {
-        return this.left;
-    }
+  /**
+   * Unsupported.
+   *
+   * @return String
+   */
+  public String getVal() {
+    throw new UnsupportedOperationException("Interior node does not have a value.");
+  } // getVal
 
-    /**
-     * returns The right value.
-     * 
-     * @return The right value.
-     */
-    @Override
-    public BitTreeNode getRight() {
-        return this.right;
-    }
+  /**
+   * returns the left value.
+   *
+   * @return the left value.
+   */
+  @Override
+  public BitTreeNode getLeft() {
+    return this.left;
+  } // getLeft
 
-    /**
-     * Sets the left node to the node inputted.
-     */
-    public void setLeft(BitTreeNode leftNode) {
-        this.left = leftNode;
-    }
+  /**
+   * returns The right value.
+   *
+   * @return The right value.
+   */
+  @Override
+  public BitTreeNode getRight() {
+    return this.right;
+  } // getRight
 
-    /**
-     * Sets the left node to the node inputted.
-     */
-    public void setRight(BitTreeNode rightNode) {
-        this.right = rightNode;
-    }
+  /**
+   * Sets the left node to the node inputted.
+   *
+   * @param leftNode
+   */
+  public void setLeft(BitTreeNode leftNode) {
+    this.left = leftNode;
+  } // setLeft
 
-}
+  /**
+   * Sets the left node to the node inputted.
+   *
+   * @param rightNode
+   */
+  public void setRight(BitTreeNode rightNode) {
+    this.right = rightNode;
+  } // setRight
+
+} // BitTreeInteriorNode
