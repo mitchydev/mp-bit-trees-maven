@@ -18,9 +18,9 @@ In the terminal run: alias ba="java -cp target/classes edu.grinnell.csc207.main.
 
 Then, you can use three different modes:
 
-1. braille. Convert ASCII text to braille bit strings.
-2. ascii. Convert braille bit strings to ASCII text.
-3. unicode. Convert ASCII text to Unicode braille characters.
+1. braille. Convert ASCII text to braille bit strings. Example "ba braille hello"
+2. ascii. Convert braille bit strings to ASCII text. Example "ba ascii 110010100010111000111000101010"
+3. unicode. Convert ASCII text to Unicode braille characters. "ba unicode hello"
 
 ---
 
