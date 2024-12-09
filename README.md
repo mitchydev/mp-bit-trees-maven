@@ -9,13 +9,18 @@ A mini-project exploring bit trees (a form of binary tree) and their use in tran
 
 **Acknowledgements**
 
-*
-*
-*
+* Evening tutors for their help on some parts of this mini project.
+* Sheilla Mulligande for assisting me in understanding assignment concepts.
 
 **Instructions for use**
 
-_Please insert instructions here._
+In the terminal run: alias ba="java -cp target/classes edu.grinnell.csc207.main.BrailleASCII"
+
+Then, you can use three different modes:
+
+1. braille. Convert ASCII text to braille bit strings.
+2. ascii. Convert braille bit strings to ASCII text.
+3. unicode. Convert ASCII text to Unicode braille characters.
 
 ---
 
